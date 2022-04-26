@@ -23,6 +23,9 @@ const hamburger = document.querySelector(".hamburger")
 const form = document.querySelector(".contact-form")
 const input = document.querySelectorAll(".mail-form")
 
+const subscription = document.querySelector(".subscription-form")
+const subscriptionInput = document.querySelector(".subscription-input")
+
 window.addEventListener("scroll", () => {
   activeLink()
   if (!skillsPlayed) skillsCounter()
@@ -249,8 +252,6 @@ links.forEach(link => {
 form.addEventListener("submit", (e) => {
   e.preventDefault()
 
-  console.log(input[1].value)
-
   var templateParams = {
     name: input[0].value,
     email: input[1].value,
@@ -269,5 +270,24 @@ form.addEventListener("submit", (e) => {
       alert('Erro, tente novamente...', error);
     });
 
+})
 
+subscription.addEventListener("submit", (e) => {
+  e.preventDefault()
+
+  var templateParams = {
+    email: subscriptionInput.value,
+    message: "ADICIONAR A LISTA DE RECEPÇÃO"
+  };
+
+  emailjs.send('service_2gh2lay', 'template_n1rrkd9',
+      templateParams) //Insert your email service ID and email template ID
+    .then(function (response) {
+      
+      subscriptionInput.value = ""
+      alert('ENVIADO!', response.status, response.text);
+
+    }, function (error) {
+      alert('Erro, tente novamente...', error);
+    });
 })
